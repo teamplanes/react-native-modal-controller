@@ -85,6 +85,7 @@ Modal Control is implemented in a very similar way to [react-native-modal](https
 ### Priorities
 
 **`PRIORITIES.STANDARD`** - Open the modal alongside (on-top-of) the existing modals - if any.
+
 **`PRIORITIES.OVERRIDE`** - Open the modal and close all existing modals.
 
 
