@@ -1,3 +1,3 @@
 ## React Native Modal Controller
 
-![https://i.imgur.com/6JhOGID.gif](Preview)
+<img src="https://i.imgur.com/6JhOGID.gif" width="200" />
