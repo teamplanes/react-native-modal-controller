@@ -1,6 +1,6 @@
 ## React Native Modal Controller
 
-Modals can be fiddly in React Native. Lets say for example you have a mostly fullscreen modal with a form init and you want to show an error modal after an incorrect submission - you'd have to close the form modal and once `onDismiss` is called open the error modal.
+Modals can be fiddly in React Native. Lets say for example you have a mostly-fullscreen modal with a form in it and you want to show an error modal after an incorrect submission - you'd have to close the form modal and once `onDismiss` is called open the error modal.
 
 React Native Modal Controller aims to solve this by providing a control component that manages your one or many modals. It does this by opening a single React Native Modal with a single backdrop.
 
@@ -79,4 +79,13 @@ export default class App extends React.Component {
 }
 
 ```
+
+Modal Control is implemented in a very similar way to [react-native-modal](https://github.com/react-native-community/react-native-modal), by using [react-native-animatable](https://github.com/oblador/react-native-animatable). So you'll notice in the above example that you can use any of the animatable animations - or implement your own.
+
+### Priorities
+
+**`PRIORITIES.STANDARD`** - Open the modal alongside (on-top-of) the existing modals - if any.
+**`PRIORITIES.OVERRIDE`** - Open the modal and close all existing modals.
+
+
 
