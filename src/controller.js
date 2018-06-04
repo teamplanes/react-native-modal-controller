@@ -160,9 +160,6 @@ class Controller extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  backdropTouchable: {
-    ...StyleSheet.absoluteFillObject,
-  },
   backdrop: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'black',
