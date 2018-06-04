@@ -88,5 +88,58 @@ Modal Control is implemented in a very similar way to [react-native-modal](https
 
 **`PRIORITIES.OVERRIDE`** - Open the modal and close all existing modals.
 
+### Props
+
+#### `modals` - required
+---
+
+```js
+type ModalsPropType = {
+	[name: string]: {
+		Component: React.Component, // required
+		animationIn?: string,
+		animationOut?: string,
+		animationInDuration?: number,
+		animationOutDuration?: number,
+		absolutePositioning?: Object, // Position the modal absolutely with given styles
+	}
+};
+```
+
+#### `customAnimations` - optional
+---
+
+```js
+type CustomAnimationsProp = ?{
+	[name: string]: {
+		from: Object,
+		to: Object,
+	}
+};
+```
+
+#### `activeBackdropOpacity` - optional
+---
+
+```js
+type ActiveBackdropOpacityProp = ?number;
+```
+
+
+#### `backdropTransitionInTiming` - optional
+---
+
+```js
+type BackdropTransitionInTimingProp = ?number;
+```
+
+#### `backdropTransitionOutTiming` - optional
+---
+
+```js
+type BackdropTransitionOutTimingProp = ?number;
+```
+
+
 
 
