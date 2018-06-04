@@ -88,9 +88,13 @@ Modal Control is implemented in a very similar way to [react-native-modal](https
 
 **`PRIORITIES.OVERRIDE`** - Open the modal and close all existing modals.
 
-### Props
+### `ModalController`
 
-#### `modals` - required
+`ModalController` should be mounted at the route of your app and only mounted once, similar to how you'd set up routing.
+
+#### Props
+
+##### `modals` - required
 ---
 
 ```js
@@ -106,7 +110,7 @@ type ModalsPropType = {
 };
 ```
 
-#### `customAnimations` - optional
+##### `customAnimations` - optional
 ---
 
 ```js
@@ -118,7 +122,7 @@ type CustomAnimationsProp = ?{
 };
 ```
 
-#### `activeBackdropOpacity` - optional
+##### `activeBackdropOpacity` - optional
 ---
 
 ```js
@@ -126,19 +130,50 @@ type ActiveBackdropOpacityProp = ?number;
 ```
 
 
-#### `backdropTransitionInTiming` - optional
+##### `backdropTransitionInTiming` - optional
 ---
 
 ```js
 type BackdropTransitionInTimingProp = ?number;
 ```
 
-#### `backdropTransitionOutTiming` - optional
+##### `backdropTransitionOutTiming` - optional
 ---
 
 ```js
 type BackdropTransitionOutTimingProp = ?number;
 ```
+
+### `showModal`
+
+`showModal` is the default export and can be used to show one of your modals based on the config you pass it.
+
+#### Args
+
+##### `name` - required
+---
+
+```js
+type name = string; // The key used in your modals prop of ModalController
+```
+
+##### `modalProps` - optional
+---
+
+```js
+type modalProps = Object; // Props passed to your Component
+```
+
+##### `priority` - optional
+---
+
+```js
+type priority = $Keys<typeof PRIORITIES>;
+```
+
+#### Overrides
+
+You can also pass in any of the `ModalsPropType`s apart from Component to override your defaults.
 
 
 

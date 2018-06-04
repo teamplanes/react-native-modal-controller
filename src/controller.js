@@ -51,7 +51,6 @@ class Controller extends React.Component {
     name,
     modalProps,
     priority = PRIORITIES.STANDARD,
-    absolutePositioning,
     ...config
   }) {
     const otherModals =
@@ -67,8 +66,6 @@ class Controller extends React.Component {
         name,
         isVisible: true,
         id: `${Math.random()}`,
-        // Conditionally make the modal wrapper absolute and custom position
-        absolutePositioning,
         // Props passed through to modal Component
         modalProps,
         // Modal base configs
