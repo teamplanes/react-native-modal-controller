@@ -7,7 +7,9 @@ import Contoller, { PRIORITIES } from './src/controller';
  */
 
 // eslint-disable-next-line no-console
-let modalRef = { showModal: () => console.warn('showModal called before initialised') };
+let modalRef = { 
+  showModal: () => console.warn('showModal called before initialised'),
+};
 
 class ModalController extends React.Component {
   render() {
@@ -15,5 +17,7 @@ class ModalController extends React.Component {
   }
 }
 
+export const hideTopModal = (...args) => modalRef.hideTopModal(...args);
+export const hideAllModals = (...args) => modalRef.hideAllModals(...args);
 export { PRIORITIES, ModalController };
 export default (...args) => modalRef.showModal(...args);
