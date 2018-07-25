@@ -7,7 +7,9 @@ import Contoller, { PRIORITIES } from './src/controller';
  */
 
 // eslint-disable-next-line no-console
-let modalRef = { showModal: () => console.warn('showModal called before initialised') };
+let modalRef = { 
+  showModal: () => console.warn('showModal called before initialised'),
+};
 
 class ModalController extends React.Component {
   render() {

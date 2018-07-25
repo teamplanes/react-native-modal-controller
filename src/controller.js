@@ -25,6 +25,7 @@ class Controller extends React.Component {
     })),
     modals: PropTypes.objectOf(PropTypes.shape({
       Component: PropTypes.func.isRequired,
+      isCancelable: PropTypes.bool,
       animationIn: PropTypes.string,
       animationOut: PropTypes.string,
       animationInDuration: PropTypes.number,
@@ -45,6 +46,26 @@ class Controller extends React.Component {
     if (this.props.customAnimations) {
       initializeRegistryWithDefinitions(this.props.customAnimations);
     }
+  }
+
+  hideTopModal = () => {
+    const modals = [...this.state.modals];
+    modals[modals.length - 1] = {
+      ...modals[modals.length - 1],
+      isVisible: false,
+    };
+    this.setState({ modals }, this.removeBackdropIfStackEmpty)
+  };
+
+  hideModal = (modalIndex) => {
+    const modals = [...this.state.modals];
+    modals[modalIndex] = {
+      ...modals[modalIndex],
+      isVisible: false,
+    }
+    this.setState({
+      modals
+    }, this.removeBackdropIfStackEmpty
   }
 
   showModal({
@@ -89,22 +110,17 @@ class Controller extends React.Component {
     );
   }
 
-  handleCloseTop = () => {
-    const modals = [...this.state.modals];
-    modals[modals.length - 1] = {
-      ...modals[modals.length - 1],
-      isVisible: false,
-    };
-    this.setState({ modals }, () => {
-      const visibleModals = modals.filter(({ isVisible }) => isVisible);
-      if (!visibleModals.length) {
-        Animated.timing(this.backdropOpacity, {
-          toValue: 0,
-          duration: this.props.backdropTransitionOutTiming,
-        }).start();
-      }
-    });
-  };
+  removeBackdropIfStackEmpty = () => {
+    const { modals } = this.state;
+    const visibleModals = modals.filter(({ isVisible }) => isVisible);
+    // hide backdrop if the is no modals to dispaly
+    if (!visibleModals.length) {
+      Animated.timing(this.backdropOpacity, {
+        toValue: 0,
+        duration: this.props.backdropTransitionOutTiming,
+      }).start();
+    }
+  }
 
   handleAnimationOutDidEnd = id => () => {
     this.setState({
@@ -115,13 +131,15 @@ class Controller extends React.Component {
   backdropOpacity = new Animated.Value(0);
 
   render() {
+    const topModal = this.state.modals[this.state.modals.length -1];
+    const isCancelable = topModal && topModal.isCancelable
     return (
       <Modal
         transparent
         animationType="none"
         visible={this.state.modals.length > 0}
       >
-        <TouchableWithoutFeedback onPress={() => this.handleCloseTop()}>
+        <TouchableWithoutFeedback onPress={isCancelable ? this.hideTopModal : () => undefined}>
           <Animated.View
             style={[styles.backdrop, { opacity: this.backdropOpacity }]}
           />
@@ -137,7 +155,7 @@ class Controller extends React.Component {
             absolutePositioning,
             isVisible,
             id,
-          }) => (
+          }, index) => (
             <ModalAnimator
               key={id}
               isVisible={isVisible}
@@ -148,7 +166,7 @@ class Controller extends React.Component {
               animationOutDuration={animationOutDuration}
               onAnimationOutDidEnd={this.handleAnimationOutDidEnd(id)}
             >
-              <Component {...modalProps || {}} />
+              <Component {...{...modalProps, hideModal: () => this.hideModal(index) }} />
             </ModalAnimator>
           ))}
       </Modal>
