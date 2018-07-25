@@ -117,7 +117,7 @@ class Controller extends React.Component {
   removeBackdropIfStackEmpty = () => {
     const { modals } = this.state;
     const visibleModals = modals.filter(({ isVisible }) => isVisible);
-    // If all modals where hidden remove the backdrop
+    // hide backdrop if the is no modals to dispaly
     if (!visibleModals.length) {
       Animated.timing(this.backdropOpacity, {
         toValue: 0,
