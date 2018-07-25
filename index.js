@@ -17,7 +17,5 @@ class ModalController extends React.Component {
   }
 }
 
-export const hideTopModal = (...args) => modalRef.hideTopModal(...args);
-export const hideAllModals = (...args) => modalRef.hideAllModals(...args);
 export { PRIORITIES, ModalController };
 export default (...args) => modalRef.showModal(...args);

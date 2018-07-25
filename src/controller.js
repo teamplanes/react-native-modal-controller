@@ -48,10 +48,6 @@ class Controller extends React.Component {
     }
   }
 
-  hideAllModals = () => {
-    this.setState({ modals: [] }, this.removeBackdropIfStackEmpty)
-  }
-
   hideTopModal = () => {
     const modals = [...this.state.modals];
     modals[modals.length - 1] = {
