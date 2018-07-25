@@ -59,7 +59,7 @@ class ModalAnimator extends React.Component {
         }
         duration={this.props.animationInDuration}
         animation={this.props.animationIn}
-        ref={(ref) => {
+        ref={ref => {
           this.view = ref;
         }}
       >

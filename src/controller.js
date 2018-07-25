@@ -19,18 +19,22 @@ class Controller extends React.Component {
     activeBackdropOpacity: PropTypes.number,
     backdropTransitionInTiming: PropTypes.number,
     backdropTransitionOutTiming: PropTypes.number,
-    customAnimations: PropTypes.objectOf(PropTypes.shape({
-      from: PropTypes.object,
-      to: PropTypes.object,
-    })),
-    modals: PropTypes.objectOf(PropTypes.shape({
-      Component: PropTypes.func.isRequired,
-      isCancelable: PropTypes.bool,
-      animationIn: PropTypes.string,
-      animationOut: PropTypes.string,
-      animationInDuration: PropTypes.number,
-      animationOutDuration: PropTypes.number,
-    })).isRequired,
+    customAnimations: PropTypes.objectOf(
+      PropTypes.shape({
+        from: PropTypes.object,
+        to: PropTypes.object,
+      })
+    ),
+    modals: PropTypes.objectOf(
+      PropTypes.shape({
+        Component: PropTypes.func.isRequired,
+        isCancelable: PropTypes.bool,
+        animationIn: PropTypes.string,
+        animationOut: PropTypes.string,
+        animationInDuration: PropTypes.number,
+        animationOutDuration: PropTypes.number,
+      })
+    ).isRequired,
   };
 
   static defaultProps = {
@@ -54,33 +58,31 @@ class Controller extends React.Component {
       ...modals[modals.length - 1],
       isVisible: false,
     };
-    this.setState({ modals }, this.removeBackdropIfStackEmpty)
+    this.setState({ modals }, this.removeBackdropIfStackEmpty);
   };
 
-  hideModal = (modalIndex) => {
+  hideModal = modalIndex => {
     const modals = [...this.state.modals];
     modals[modalIndex] = {
       ...modals[modalIndex],
       isVisible: false,
-    }
-    this.setState({
-      modals
-    }, this.removeBackdropIfStackEmpty
-  }
+    };
+    this.setState(
+      {
+        modals,
+      },
+      this.removeBackdropIfStackEmpty
+    );
+  };
 
-  showModal({
-    name,
-    modalProps,
-    priority = PRIORITIES.STANDARD,
-    ...config
-  }) {
+  showModal({ name, modalProps, priority = PRIORITIES.STANDARD, ...config }) {
     const otherModals =
       priority === PRIORITIES.STANDARD
-        // Keep all all other modal open in parallel
-        ? [...this.state.modals]
-        // Hide all others - at the moment we only have
-        // OVERRIDE - in the future ENQUEUE could be cool!
-        : this.state.modals.map(modal => ({ ...modal, isVisible: false }));
+        ? // Keep all all other modal open in parallel
+          [...this.state.modals]
+        : // Hide all others - at the moment we only have
+          // OVERRIDE - in the future ENQUEUE could be cool!
+          this.state.modals.map(modal => ({ ...modal, isVisible: false }));
     const newModals = [
       ...otherModals,
       {
@@ -106,7 +108,7 @@ class Controller extends React.Component {
           toValue: this.props.activeBackdropOpacity,
           duration: this.props.backdropTransitionInTiming,
         }).start();
-      },
+      }
     );
   }
 
@@ -120,7 +122,7 @@ class Controller extends React.Component {
         duration: this.props.backdropTransitionOutTiming,
       }).start();
     }
-  }
+  };
 
   handleAnimationOutDidEnd = id => () => {
     this.setState({
@@ -131,31 +133,37 @@ class Controller extends React.Component {
   backdropOpacity = new Animated.Value(0);
 
   render() {
-    const topModal = this.state.modals[this.state.modals.length -1];
-    const isCancelable = topModal && topModal.isCancelable
+    const topModal = this.state.modals[this.state.modals.length - 1];
+    const isCancelable = topModal && topModal.isCancelable;
     return (
       <Modal
         transparent
         animationType="none"
         visible={this.state.modals.length > 0}
       >
-        <TouchableWithoutFeedback onPress={isCancelable ? this.hideTopModal : () => undefined}>
+        <TouchableWithoutFeedback
+          onPress={isCancelable ? this.hideTopModal : () => undefined}
+        >
           <Animated.View
             style={[styles.backdrop, { opacity: this.backdropOpacity }]}
           />
         </TouchableWithoutFeedback>
 
-        {this.state.modals.map(({
-            Component,
-            modalProps,
-            animationIn,
-            animationOut,
-            animationInDuration,
-            animationOutDuration,
-            absolutePositioning,
-            isVisible,
-            id,
-          }, index) => (
+        {this.state.modals.map(
+          (
+            {
+              Component,
+              modalProps,
+              animationIn,
+              animationOut,
+              animationInDuration,
+              animationOutDuration,
+              absolutePositioning,
+              isVisible,
+              id,
+            },
+            index
+          ) => (
             <ModalAnimator
               key={id}
               isVisible={isVisible}
@@ -166,9 +174,12 @@ class Controller extends React.Component {
               animationOutDuration={animationOutDuration}
               onAnimationOutDidEnd={this.handleAnimationOutDidEnd(id)}
             >
-              <Component {...{...modalProps, hideModal: () => this.hideModal(index) }} />
+              <Component
+                {...{ ...modalProps, hideModal: () => this.hideModal(index) }}
+              />
             </ModalAnimator>
-          ))}
+          )
+        )}
       </Modal>
     );
   }
