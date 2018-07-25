@@ -135,7 +135,6 @@ class Controller extends React.Component {
   backdropOpacity = new Animated.Value(0);
 
   render() {
-    // is top modal nancellable
     const topModal = this.state.modals[this.state.modals.length -1];
     const isCancelable = topModal && topModal.isCancelable
     return (
