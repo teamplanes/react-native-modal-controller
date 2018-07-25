@@ -65,7 +65,7 @@ class Controller extends React.Component {
     }
     this.setState({
       modals
-    }, this.removeBackdropIfStackEmpty())
+    }, this.removeBackdropIfStackEmpty
   }
 
   showModal({
