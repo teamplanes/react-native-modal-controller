@@ -1,10 +1,13 @@
 {
   "name": "react-native-modal-controller",
-  "version": "1.0.0-rc.0",
+  "version": "1.0.0-rc.1",
   "description": "Handle many modals with ease",
   "main": "lib/index.js",
   "author": "Henry Kirkness",
   "license": "MIT",
+  "files": [
+    "lib"
+  ],
   "dependencies": {
     "react-native-animatable": "^1.3.2"
   },
