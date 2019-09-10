@@ -20,12 +20,12 @@ const MyModal = (props: ModalComponentProps<any>) => (
 );
 
 const MyScreen = () => {
-  const something = useModalController();
+  const modal = useModalController();
   return (
     <View style={{flex: 1}}>
       <TouchableOpacity
         onPress={() =>
-          something.onShowModal({
+          modal.onShowModal({
             name: 'myModal',
             priority: Priority.Override,
           })
