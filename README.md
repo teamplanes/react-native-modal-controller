@@ -1,18 +1,24 @@
-## React Native Modal Controller
+## React Native Modal Controller 🕹
 
-Modals can be fiddly in React Native. Lets say for example you have a mostly-fullscreen modal with a form in it and you want to show an error modal after an incorrect submission - you'd have to close the form modal and once `onDismiss` is called open the error modal.
+A more ergonomic interface for opening and managing modals in your react native
+app.
 
-React Native Modal Controller aims to solve this by providing a control component that manages your one or many modals. It does this by opening a single React Native Modal with a single backdrop.
+- 🎣 Uses React hooks
+- 🍆 Written in TypeScript
+- 💥 Open multiple modals at once (tray and an alert, or whatever)
+- 🎩 Fancy animations using `react-native-animatable`
 
-For example, you might want to have a modal and a tray with a picker in it:
+For example, you might want to have a modal and a tray:
 
 <img src="https://i.imgur.com/6JhOGID.gif" width="200" />
 
 ## Example Usage:
 
 ```tsx
+// Your basic popup component
 const MyModal = (props: ModalComponentProps<any>) => (
   <View style={{height: 300, width: 300, backgroundColor: 'white'}}>
+    {/* Opens another modal from within */}
     <TouchableOpacity onPress={() => props.onShowModal({name: 'myModal'})}>
       <Text>Open another</Text>
     </TouchableOpacity>
@@ -20,11 +26,13 @@ const MyModal = (props: ModalComponentProps<any>) => (
 );
 
 const MyScreen = () => {
+  // The Hook!
   const modal = useModalController();
   return (
     <View style={{flex: 1}}>
       <TouchableOpacity
         onPress={() =>
+          // Show the `myModal` popup declared in the the provider
           modal.onShowModal({
             name: 'myModal',
             priority: Priority.Override,
@@ -36,22 +44,27 @@ const MyScreen = () => {
   );
 };
 
+// Your app entry point - define your Modals and pass into the Context Provider
 const App = () => {
   return (
     <ModalControllerProvider
       modals={[
         {
+          // Your unique name/key for this modal to be opened
           name: 'myModal',
+          // Define whether, when opened, this modal should override or exist in parallel
           priority: Priority.Override,
           animation: {
             inDuration: 500,
             outDuration: 500,
+            // Using react-native-animatable animations or your own
             in: 'fadeInDown' as Animation,
             out: 'fadeOutUp' as Animation,
           },
           Component: MyModal,
         },
       ]}
+      // Customise the backdrop
       backdrop={{
         activeOpacity: 0.5,
         transitionInTiming: 500,
