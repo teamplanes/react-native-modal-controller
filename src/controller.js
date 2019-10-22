@@ -140,6 +140,11 @@ class Controller extends React.Component {
         transparent
         animationType="none"
         visible={this.state.modals.length > 0}
+        supportedOrientations={[
+          "portrait",
+          "portrait-upside-down",
+          "landscape"
+        ]}
       >
         <TouchableWithoutFeedback
           onPress={isCancelable ? this.hideTopModal : () => undefined}
