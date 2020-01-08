@@ -1,6 +1,12 @@
 /* eslint-disable import/no-unresolved */
 import React from "react";
-import { StyleProp, ViewStyle, TextStyle, ImageStyle } from "react-native";
+import {
+  StyleProp,
+  ViewStyle,
+  TextStyle,
+  ImageStyle,
+  ModalProps
+} from "react-native";
 import { CustomAnimation, Animation } from "react-native-animatable";
 
 export enum Priority {
@@ -31,6 +37,7 @@ export interface ModalType {
   absolutePositioning?: StyleProp<ViewStyle>;
   animation: AnimationConfig;
   params?: Record<string, any>;
+  supportedOrientations?: ModalProps["supportedOrientations"];
 }
 
 export interface ConsumerProps {
@@ -51,6 +58,7 @@ export interface ModalControllerProviderProps {
     [key: string]: CustomAnimation<TextStyle & ViewStyle & ImageStyle>;
   };
   children: React.ReactChild;
+  supportedOrientations?: ModalProps["supportedOrientations"];
 }
 
 export type ShowModalConfig = Partial<ModalType> & Pick<ModalType, "name">;
