@@ -1,6 +1,6 @@
 {
   "name": "react-native-modal-controller",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0",
   "description": "Handle many modals with ease",
   "main": "lib/index.js",
   "author": "Henry Kirkness",
