@@ -199,7 +199,24 @@ const ModalControllerProvider = (props: ModalControllerProviderProps) => {
     <Context.Provider value={modalConsumerProps}>
       {props.children}
 
-      <Modal transparent animationType="none" visible={modals.length > 0}>
+      <Modal
+        transparent
+        animationType="none"
+        visible={modals.length > 0}
+        supportedOrientations={
+          (topModal &&
+            topModal.supportedOrientations &&
+            !!topModal.supportedOrientations.length &&
+            topModal.supportedOrientations) ||
+          (props.supportedOrientations &&
+            !!props.supportedOrientations.length &&
+            props.supportedOrientations) || [
+            "portrait",
+            "portrait-upside-down",
+            "landscape"
+          ]
+        }
+      >
         <TouchableWithoutFeedback
           onPress={isCancelable ? hideTopModal : undefined}
         >
