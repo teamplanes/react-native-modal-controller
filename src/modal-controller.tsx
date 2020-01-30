@@ -216,6 +216,7 @@ const ModalControllerProvider = (props: ModalControllerProviderProps) => {
             "landscape"
           ]
         }
+        onRequestClose={hideTopModal}
       >
         <TouchableWithoutFeedback
           onPress={isCancelable ? hideTopModal : undefined}
