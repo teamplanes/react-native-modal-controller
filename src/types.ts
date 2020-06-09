@@ -25,6 +25,7 @@ export interface BackdropConfig {
   activeOpacity?: number;
   transitionInTiming?: number;
   transitionOutTiming?: number;
+  backgroundColor?: string;
 }
 
 export interface ModalType {

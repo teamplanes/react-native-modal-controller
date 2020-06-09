@@ -30,6 +30,7 @@ import {
 
 const defaultBackdrop: Required<BackdropConfig> = {
   activeOpacity: 0.5,
+  backgroundColor: 'black',
   transitionInTiming: 500,
   transitionOutTiming: 500
 };
@@ -103,23 +104,20 @@ const ModalAnimator = (props: ModalAnimatorProps) => {
   );
 };
 
-const modalControllerProviderStyles = StyleSheet.create({
-  backdrop: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: "black"
-  }
-});
-
 const ModalControllerProvider = (props: ModalControllerProviderProps) => {
   const [modals, setModals] = useState<ModalType[]>([]);
   const backdropOpacity = useRef(new Animated.Value(0));
 
-  const handleBackdropFade = useCallback(() => {
-    const visibleModals = modals.filter(({ isVisible }) => isVisible);
-    const backdrop = {
+  const backdropConfig = () => {
+    return  {
       ...defaultBackdrop,
       ...(props.backdrop || {})
     };
+  };
+
+  const handleBackdropFade = useCallback(() => {
+    const visibleModals = modals.filter(({ isVisible }) => isVisible);
+    const backdrop = backdropConfig()
     // hide backdrop if the is no modals to display
     if (!visibleModals.length) {
       Animated.timing(backdropOpacity.current, {
@@ -195,6 +193,16 @@ const ModalControllerProvider = (props: ModalControllerProviderProps) => {
     onShowModal: handleShowModal
   };
 
+  const modalControllerProviderStyles = () => { 
+    const backdrop = backdropConfig()
+    return StyleSheet.create({
+      backdrop: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: backdrop.backgroundColor
+      }
+    });
+  };
+
   return (
     <Context.Provider value={modalConsumerProps}>
       {props.children}
@@ -223,7 +231,7 @@ const ModalControllerProvider = (props: ModalControllerProviderProps) => {
         >
           <Animated.View
             style={[
-              modalControllerProviderStyles.backdrop,
+              modalControllerProviderStyles().backdrop,
               { opacity: backdropOpacity.current }
             ]}
           />
